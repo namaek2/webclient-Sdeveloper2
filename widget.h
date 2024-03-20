@@ -20,21 +20,29 @@ public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
 
-    //QTcpSocket socket_;
+    //QSslSocket inherite QTcpSocket
     QSslSocket socket_;
+
+    //QTcpSocket tcp_socket_;
     //QUdpSocket socket_;
 
 public slots:
     void doConnected();
     void doDisconnected();
     void doReadyRead();
+    void disableButtons(bool connected);
 
 private slots:
+
     void on_pbConnect_clicked();
 
     void on_pbDisconnect_clicked();
 
     void on_pbSend_clicked();
+
+    void on_cbSSL_stateChanged(int arg1);
+
+    void on_pbClear_clicked();
 
 private:
     Ui::Widget *ui;

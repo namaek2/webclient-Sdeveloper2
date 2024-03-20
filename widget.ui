@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QWidget" name="">
+  <widget class="QWidget" name="layoutWidget">
    <property name="geometry">
     <rect>
      <x>210</x>
@@ -54,6 +54,16 @@
        <widget class="QLineEdit" name="leHost">
         <property name="text">
          <string>www.naver.com</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QCheckBox" name="cbSSL">
+        <property name="enabled">
+         <bool>true</bool>
+        </property>
+        <property name="text">
+         <string>SSL</string>
         </property>
        </widget>
       </item>
