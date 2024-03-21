@@ -6,10 +6,7 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
-
-    ui->pbConnect->setDisabled(false);
-    ui->pbDisconnect->setDisabled(true);
-    ui->cbSSL->setCheckState(Qt::Unchecked);
+    init();
 
     QObject::connect(&socket_, &QAbstractSocket::connected, this, &Widget::doConnected);
     QObject::connect(&socket_, &QAbstractSocket::disconnected, this,  &Widget::doDisconnected);
@@ -19,6 +16,42 @@ Widget::Widget(QWidget *parent)
 Widget::~Widget()
 {
     delete ui;
+}
+
+void Widget::init() {
+
+    ui->pbConnect->setDisabled(false);
+    ui->pbDisconnect->setDisabled(true);
+
+    filefunc ff;
+    QString val = ff.loadFile();
+    if(val=="failed"){
+        initFailed();
+    }
+
+    QByteArray data = val.toUtf8();
+    QJsonParseError errorPtr;
+    QJsonDocument doc = QJsonDocument::fromJson(data, &errorPtr);
+
+    if (doc.isNull()) {
+        initFailed();
+    }
+
+    QJsonObject datas = doc.object();
+    ui->leHost->setText(datas.value("host").toString());
+    ui->lePort->setText(datas.value("port").toString());
+
+    if(datas.value("ssl") == 0) {
+        ui->cbSSL->setCheckState(Qt::Unchecked);
+        return;
+    }
+    ui->cbSSL->setCheckState(Qt::Checked);
+}
+
+void Widget::initFailed() {
+    ui->leHost->setText("www.naver.com");
+    ui->lePort->setText("80");
+    ui->cbSSL->setCheckState(Qt::Unchecked);
 }
 
 void Widget::disableButtons(bool connected){

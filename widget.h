@@ -23,7 +23,8 @@ public:
 
     //QSslSocket inherite QTcpSocket
     QSslSocket socket_;
-
+    void init();
+    void initFailed();
     //QTcpSocket tcp_socket_;
     //QUdpSocket socket_;
 

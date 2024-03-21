@@ -22,10 +22,18 @@ void filefunc::saveFile(QString host_t, int ssl_t, QString port_t) {
 QString filefunc::loadFile() {
     QFile file("data.json");
 
-    if(!QFileInfo::exists("data.json")) {
-        return "nofile";
+    if(!file.open(QIODevice::ReadOnly | QIODevice::Text)){
+        QJsonObject data;
+        data["host"] = "www.naver.com";
+        data["ssl"] = 0;
+        data["port"] = 80;
+        if (!file.open(QIODevice::WriteOnly)) {
+            qWarning() << "writing failed " << file.errorString();
+            return "failed";
+        }
+        QJsonDocument doc(data);
+        file.write(doc.toJson());
     }
-    file.open(QIODevice::ReadWrite | QIODevice::Text);
     QString val = file.readAll();
     file.close();
 
