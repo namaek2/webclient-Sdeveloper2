@@ -85,3 +85,10 @@ void Widget::on_pbClear_clicked()
     ui->pteMessage->clear();
 }
 
+void Widget::on_pbSaveExit_clicked()
+{
+    filefunc ff;
+    ff.saveFile(ui->leHost->text(), ui->cbSSL->checkState(), ui->lePort->text());
+    QApplication::quit();
+}
+

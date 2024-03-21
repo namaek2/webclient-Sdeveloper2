@@ -5,6 +5,7 @@
 #include <QTcpSocket>
 #include <QSslSocket>
 #include <QUdpSocket>
+#include "filefunc.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -43,6 +44,8 @@ private slots:
     void on_cbSSL_stateChanged(int arg1);
 
     void on_pbClear_clicked();
+
+    void on_pbSaveExit_clicked();
 
 private:
     Ui::Widget *ui;
